@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const mongoSanitize = require('express-mongo-sanitize');
+const sanitize = require('./middleware/sanitize');
 
 const productRoutes = require('./routes/product');
 const userRoutes = require('./routes/user');
@@ -9,15 +9,29 @@ const orderRoutes = require('./routes/order');
 
 const app = express();
 app.use(bodyParser.json());
-app.use(mongoSanitize());
+app.use(sanitize);
 
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/orders', orderRoutes);
-
-mongoose.connect('mongodb://localhost:27017/pof', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+// Welcome route (GET /)
+app.get('/', (req, res) => {
+  res.send('Welcome to the Planty of Food API!');
 });
 
-app.listen(3000, () => console.log('API server running on http://localhost:3000'));
+app.use('/routes/product', productRoutes);
+app.use('/routes/user', userRoutes);
+app.use('/routes/order', orderRoutes);
+
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/pof', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('MongoDB connected');
+}).catch((err) => {
+  console.error('MongoDB connection error:', err);
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
