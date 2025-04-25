@@ -3,7 +3,7 @@
 ![HTML](https://img.shields.io/badge/html-blue?logo=html5)
 ![CSS](https://img.shields.io/badge/css-blue?logo=css3)
 ![Node](https://img.shields.io/badge/node-red?logo=npm)
-![Vue](https://img.shields.io/badge/vue-green?logo=vue)
+![MongoDB](https://img.shields.io/badge/mongodb-green?logo=mongodb)
 
 # Node Project: API RESTful POF
 This is the backend API for managing group purchases on the Planty of Food platform, built using Node.js, Express, and MongoDB.
